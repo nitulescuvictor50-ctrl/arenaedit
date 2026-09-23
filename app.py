@@ -48,9 +48,11 @@ from core import basics                    # noqa: E402
 from core.models import (                  # noqa: E402
     CATALOG, ModelInfo, ModelManager, find_model, get_models, human_gb,
 )
+from core.prompts import PROMPT_LIBRARY    # noqa: E402
+from core.prompt_ui import PromptLibraryWindow  # noqa: E402
 
 APP_NAME = "ArenaEdit"
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 PREVIEW_BOX = (640, 560)
 
 CUSTOM_LABEL = "Alt model (ID Hugging Face)…"
@@ -318,6 +320,17 @@ class ArenaEditApp(ctk.CTk):
                          anchor="w").pack(fill="x", padx=(16, 0))
             self._nav_buttons[name] = btn
 
+        # buton librărie de prompt-uri (nu e tab, deschide o fereastră)
+        box = ctk.CTkFrame(sb, fg_color="transparent")
+        box.pack(fill="x", padx=12, pady=3)
+        ctk.CTkButton(
+            box, text="📚  Prompt-uri", font=self.font_h, anchor="w", height=42,
+            corner_radius=10, fg_color="transparent", hover_color="#242424",
+            command=self._open_prompt_library
+        ).pack(fill="x")
+        ctk.CTkLabel(box, text="Propuneri de prompt gata făcute", font=self.font_small,
+                     text_color="#6f6f6f", anchor="w").pack(fill="x", padx=(16, 0))
+
         # chip dispozitiv
         self.device_label = ctk.CTkLabel(sb, text="… se detectează dispozitivul",
                                          font=self.font_small, text_color="#8a8a8a",
@@ -360,6 +373,36 @@ class ArenaEditApp(ctk.CTk):
             self._refresh_history()
         if name == "setari":
             self._refresh_model_rows()
+
+    # ================================================================ librărie prompt-uri
+    def _open_prompt_library(self):
+        if getattr(self, "_prompt_win", None) is not None and self._prompt_win.winfo_exists():
+            self._prompt_win.lift()
+            self._prompt_win.focus_force()
+            return
+        self._prompt_win = PromptLibraryWindow(self, on_use=self._apply_prompt)
+        self.set_status("Librărie de prompt-uri deschisă — alege unul și apasă „Folosește”.")
+
+    def _apply_prompt(self, p):
+        """Aplică promptul ales în tab-ul potrivit, apoi comută pe el."""
+        if p.target == "generare":
+            self.gen_prompt.delete("1.0", "end")
+            self.gen_prompt.insert("1.0", p.prompt)
+            self.gen_negative.delete(0, "end")
+            if p.negativ:
+                self.gen_negative.insert(0, p.negativ)
+            self._select_tab("generare")
+            self.set_status(f"Prompt aplicat: „{p.titlu}” — apasă „Generează”.")
+        else:
+            self._set_edit_mode(p.mod)
+            self.edit_prompt.delete("1.0", "end")
+            self.edit_prompt.insert("1.0", p.prompt)
+            self.edit_negative.delete(0, "end")
+            if p.negativ:
+                self.edit_negative.insert(0, p.negativ)
+            self._select_tab("editare")
+            self.set_status(f"Prompt aplicat: „{p.titlu}” — încarcă o imagine și apasă "
+                            "„Editează imaginea”.")
 
     # ================================================================ tab GENERARE
     def _build_generate_tab(self):

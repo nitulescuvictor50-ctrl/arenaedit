@@ -94,6 +94,28 @@ def main():
         print(f"         (SD Turbo ≈ {total/1e9:.2f} GB — corect)")
     check("dimensiune estimată SD Turbo (prin API Hugging Face)", t_expected)
 
+    print("\n3b. Librărie de prompt-uri predefinite…")
+    from core.prompts import PROMPT_LIBRARY, CATEGORIES, search_prompts
+
+    def t_library():
+        assert len(PROMPT_LIBRARY) >= 20, f"prea puține: {len(PROMPT_LIBRARY)}"
+        ids = [p.id for p in PROMPT_LIBRARY]
+        assert len(ids) == len(set(ids)), "id-uri duplicate"
+        for p in PROMPT_LIBRARY:
+            assert p.titlu and p.prompt and p.categorie, f"câmp gol: {p.id}"
+            assert p.target in ("generare", "editare"), f"target invalid: {p.id}"
+            if p.target == "editare":
+                assert p.mod in ("Instrucțiune", "Reimaginare"), p.id
+        gens = [p for p in PROMPT_LIBRARY if p.target == "generare"]
+        edits = [p for p in PROMPT_LIBRARY if p.target == "editare"]
+        assert gens and edits, "trebuie să existe ambele tipuri"
+        assert len(search_prompts("zăpadă")) >= 1
+        assert len(search_prompts("", "Peisaje")) >= 1
+        assert len(search_prompts("xyzabc_inexistent")) == 0
+        print(f"         ({len(PROMPT_LIBRARY)} prompt-uri, {len(CATEGORIES)} categorii)")
+
+    check("librărie de prompt-uri consistentă + căutare", t_library)
+
     print("\n4. Motorul AI (torch + diffusers, model minuscul de test)…")
     try:
         from core.engine import AIEngine, detect_device

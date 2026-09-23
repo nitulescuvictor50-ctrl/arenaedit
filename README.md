@@ -22,6 +22,7 @@ nu părăsesc niciodată PC-ul.
 | ✦ **Generare** | Creezi imagini noi dintr-o descriere text (română sau engleză) |
 | ✎ **Editare AI prin instrucțiuni** | Încarci o imagine și scrii ce vrei să schimbi: *„pune apus de soare"*, *„șterge fundalul"*, *„transformă în desen"* |
 | ↻ **Reimaginare** | Imaginea ta + un prompt = variantă nouă (modele SD/SDXL) |
+| 📚 **Librărie de prompt-uri** | 44 de prompt-uri predefinite, în română, pe categorii — cauți și aplici cu un click |
 | ⌗ **Editare de bază** | Redimensionare, rotire, oglindire, decupare cu mouse-ul, luminozitate/contrast/saturație/claritate, conversie PNG/JPG/WebP/BMP |
 | ⊞ **Istoric** | Toate rezultatele se salvează automat într-un folder (implicit `Imagini\ArenaEdit`) |
 
@@ -78,6 +79,8 @@ Dacă vrei o singură aplicație `.exe`, fără să mai ții folderul cu Python:
 | orice model Hugging Face | ambele | variază | Setări → „Adaugă orice model difuzie" |
 
 2. **Generare:** tab-ul *Generare* → scrii o descriere → **Generează** (Ctrl+Enter).
+   Idei? Apasă **📚 Prompt-uri** în meniul din stânga — alege o propunere și dă click pe
+   **„Folosește"**: îți umple promptul (și negativul) automat.
 3. **Editare AI:** tab-ul *Editare AI* → încarci o imagine (sau Ctrl+V) → alegi modelul
    InstructPix2Pix → scrii instrucțiunea → **Editează imaginea**. Cu **„Continuă de aici ↻"**
    poți aplica mai multe editări unul după altul.
@@ -121,7 +124,8 @@ python test_core.py    # suita de teste (motor AI cap-coadă, inclusiv CI)
 ```
 
 Structură: `app.py` (interfața customtkinter) · `core/engine.py` (motorul diffusers) ·
-`core/models.py` (catalog + descărcări optimizate fp16) · `core/basics.py` (operații PIL).
+`core/models.py` (catalog + descărcări optimizate fp16) · `core/basics.py` (operații PIL) ·
+`core/prompts.py` + `core/prompt_ui.py` (librăria de prompt-uri).
 Testele rulează automat pe GitHub Actions la fiecare push (`.github/workflows/teste.yml`).
 
 ## Licență
