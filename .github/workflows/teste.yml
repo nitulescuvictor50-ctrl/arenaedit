@@ -1,0 +1,29 @@
+name: Teste
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  teste:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instaleaza dependentele (torch varianta CPU, mai rapida de instalat)
+        shell: pwsh
+        run: |
+          pip install --index-url https://download.pytorch.org/whl/cpu torch
+          pip install -r requirements.txt
+
+      - name: Ruleaza testele (operatii de baza + motor AI cap-coada)
+        shell: pwsh
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python test_core.py

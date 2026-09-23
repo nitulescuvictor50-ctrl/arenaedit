@@ -1,0 +1,12 @@
+# ArenaEdit — dependențe Python
+# Pe Windows, „pip install torch” aduce automat varianta cu suport CUDA (NVIDIA).
+torch>=2.4
+diffusers>=0.31
+transformers>=4.44
+accelerate>=0.34
+safetensors>=0.4
+huggingface_hub>=0.25
+sentencepiece>=0.2
+protobuf>=4
+customtkinter>=5.2
+pillow>=10

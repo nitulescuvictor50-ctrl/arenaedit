@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# PyInstaller (BUILD_EXE.bat)
+build/
+dist/
+*.spec
+
+# Date locale ArenaEdit (nu se publică pe GitHub)
+models/
+setari.json
+output/
+
+# Sisteme de operare / editoare
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp

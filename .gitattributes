@@ -1,0 +1,12 @@
+# Normalizare automată a terminațiilor de rând
+* text=auto
+
+# Scripturile .bat au nevoie de CRLF pe Windows
+*.bat text eol=crlf
+
+# Fișiere binare
+*.png binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.zip binary
