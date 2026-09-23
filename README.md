@@ -1,8 +1,17 @@
 # ArenaEdit — Studio AI pentru imagini (Windows 11)
 
+[![Teste](https://github.com/nitulescuvictor50-ctrl/arenaedit/actions/workflows/teste.yml/badge.svg)](https://github.com/nitulescuvictor50-ctrl/arenaedit/actions/workflows/teste.yml)
+[![Licență: MIT](https://img.shields.io/badge/licen%C8%9B%C4%83-MIT-blue.svg)](LICENSE)
+
 **Generează și editează imagini cu inteligență artificială, 100% local, direct din Windows.**
 Fără abonamente, fără chei API, fără cloud — modelele rulează pe calculatorul tău și imaginile
 nu părăsesc niciodată PC-ul.
+
+> **Instalare rapidă (utilizatori):** apasă butonul verde **Code → Download ZIP**,
+> dezarhivează, apoi doble-click pe **`INSTALARE.bat`**. Atât.
+>
+> **Dezvoltatori:** `git clone https://github.com/nitulescuvictor50-ctrl/arenaedit.git`,
+> apoi `INSTALARE.bat` (sau `pip install -r requirements.txt` + `python app.py`).
 
 ---
 
@@ -103,7 +112,7 @@ internetul după aceea — aplicația funcționează offline).
 ## Pentru dezvoltatori
 
 ```bash
-git clone https://github.com/UTILIZATOR/arenaedit.git
+git clone https://github.com/nitulescuvictor50-ctrl/arenaedit.git
 cd arenaedit
 python -m venv .venv && .venv\Scripts\activate
 pip install -r requirements.txt
